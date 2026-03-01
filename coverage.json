@@ -1,248 +1,47 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T20:59:38.105Z",
+  "generatedAt": "2026-03-01T23:24:14.623Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 8,
-    "implemented": 7,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-1",
-        "summary": "Create a game lobby screen where 8 player slots are displayed. Each slot must allow the user to assign it as 'Player' (human-controlled) or 'Bot' (AI-controlled), choose a team (Native Peoples or Colonizers), and enter a name. The two teams must be balanced (4 vs 4). The lobby should include a 'Start Game' button that only activates when all 8 slots are configured.",
+        "id": "REQ-28",
+        "summary": "In `frontend/src/components/GameTimer.tsx`, update the timer text styling so that both the match countdown and the conquest countdown labels and time values are rendered in black color regardless of warning/critical state transitions. Ensure the pulsing warning (orange) and critical (red) states only affect background or border indicators, not the text color itself.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/types/game.ts",
-          "frontend/src/components/GameLobby.tsx",
-          "frontend/src/components/PlayerSlotCard.tsx",
-          "frontend/src/pages/LobbyPage.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/components/GameTimer.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/types/game.ts",
-          "frontend/src/components/GameLobby.tsx",
-          "frontend/src/components/PlayerSlotCard.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/components/GameTimer.tsx"
         ]
       },
       {
-        "id": "REQ-2",
-        "summary": "Implement the main game board as a 2D top-down map representing a 16th-century landscape with distinct land territories. The map must show territory zones that Colonizers can capture. Native Peoples units defend these territories. The game is rendered using React with a canvas or SVG-based approach for the map and units.",
+        "id": "REQ-29",
+        "summary": "Add an 'End Turn' button to the game HUD in `frontend/src/pages/GamePage.tsx`. The button must be prominently visible during gameplay, styled consistently with the 16th-century parchment theme. When a human-controlled player clicks 'End Turn', the current player's turn is concluded and the game engine advances to the next player's turn (calling the appropriate turn-advance logic in `frontend/src/hooks/useGameEngine.ts`). The button should be disabled or hidden when it is not the local human player's turn (e.g., during bot turns or animations).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/GameBoard.tsx",
-          "frontend/src/components/Territory.tsx",
-          "frontend/src/components/Unit.tsx",
-          "frontend/src/hooks/useGameState.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/GameBoard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-3",
-        "summary": "Implement turn-based or real-time movement and action mechanics: human-controlled players can select and move their unit and perform actions (attack, defend, fortify territory) via click/tap. Bot-controlled slots execute AI logic automatically. Units should have basic stats (health, attack, movement range).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/UnitActionPanel.tsx",
-          "frontend/src/hooks/useUnitActions.ts",
-          "frontend/src/utils/botAI.ts",
-          "frontend/src/components/GameBoard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/UnitActionPanel.tsx",
-          "frontend/src/utils/botAI.ts",
-          "frontend/src/components/GameBoard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Implement the territory conquest mechanic: a territory is 'conquered' by the Colonizers when one or more Colonizer units occupy it uncontested for a set duration. Conquered territories change visual state. The Colonizers win condition is met when all territories are conquered. Track conquest progress visually (e.g., a per-territory capture bar).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/CaptureProgressBar.tsx",
-          "frontend/src/hooks/useTerritoryCapture.ts",
-          "frontend/src/components/Territory.tsx",
-          "frontend/src/utils/winConditions.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/CaptureProgressBar.tsx",
-          "frontend/src/utils/winConditions.ts"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Implement a 10-minute countdown game timer displayed prominently during gameplay. When the timer reaches zero and the Colonizers have NOT conquered all territories, the Native Peoples win. If Colonizers conquer all territories before the timer expires, they win immediately. Display a game-over screen announcing the winning team with a 'Play Again' and 'Return to Lobby' option.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/GameTimer.tsx",
-          "frontend/src/hooks/useGameTimer.ts",
-          "frontend/src/components/GameOverScreen.tsx",
           "frontend/src/pages/GamePage.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/hooks/useGameEngine.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/GameTimer.tsx",
-          "frontend/src/components/GameOverScreen.tsx",
-          "frontend/src/pages/GamePage.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-6",
-        "summary": "Store game session state (active game, territory ownership, unit positions, timer, scores) in the Motoko backend actor so that game state persists and can be queried by the frontend. Expose query and update calls for: creating a game session, updating territory ownership, updating unit positions, and retrieving the current game state.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-7",
-        "summary": "Apply a rich 16th-century colonial era visual theme across the entire UI: earthy and natural color palette (forest greens, ochre, terracotta, aged parchment backgrounds), period-inspired typography, illustrated-style map tiles, and historically-evocative iconography for both teams (feathers and tribal motifs for Native Peoples; galleons, crosses, and armor for Colonizers). Apply the theme consistently from lobby to game board to game-over screen.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/components/ThemeLayout.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-8",
-        "summary": "Generate and render custom static images for the game: a parchment-textured map background, a Native Peoples team emblem, and a Colonizers team emblem. Serve these as static assets from frontend/public/assets/generated.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/GameBoard.tsx",
-          "frontend/src/components/GameLobby.tsx",
-          "frontend/src/components/Unit.tsx",
-          "frontend/src/components/GameOverScreen.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/GameBoard.tsx",
-          "frontend/src/components/GameLobby.tsx",
-          "frontend/src/components/GameOverScreen.tsx"
+          "frontend/src/pages/GamePage.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
-    "build-template/Dockerfile",
-    "build-template/LICENSE",
-    "build-template/README.md",
-    "build-template/deploy.sh",
-    "build-template/icp.yaml",
-    "build-template/package.json",
-    "build-template/pnpm-lock.yaml",
-    "build-template/pnpm-workspace.yaml",
-    "build-template/scripts/prune-unused-images.js",
-    "build-template/scripts/resize-images.js",
-    "build-template/src/backend/canister.yaml",
-    "build-template/src/backend/system-idl/aaaaa-aa.did",
-    "build-template/src/frontend/canister.yaml",
-    "build-template/src/frontend/components.json",
-    "build-template/src/frontend/env.json",
-    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
-    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
-    "build-template/src/frontend/eslint.config.js",
-    "build-template/src/frontend/package.json",
-    "build-template/src/frontend/postcss.config.js",
-    "build-template/src/frontend/src/components/ui/accordion.tsx",
-    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
-    "build-template/src/frontend/src/components/ui/alert.tsx",
-    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
-    "build-template/src/frontend/src/components/ui/avatar.tsx",
-    "build-template/src/frontend/src/components/ui/badge.tsx",
-    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
-    "build-template/src/frontend/src/components/ui/button.tsx",
-    "build-template/src/frontend/src/components/ui/calendar.tsx",
-    "build-template/src/frontend/src/components/ui/card.tsx",
-    "build-template/src/frontend/src/components/ui/carousel.tsx",
-    "build-template/src/frontend/src/components/ui/chart.tsx",
-    "build-template/src/frontend/src/components/ui/checkbox.tsx",
-    "build-template/src/frontend/src/components/ui/collapsible.tsx",
-    "build-template/src/frontend/src/components/ui/command.tsx",
-    "build-template/src/frontend/src/components/ui/context-menu.tsx",
-    "build-template/src/frontend/src/components/ui/dialog.tsx",
-    "build-template/src/frontend/src/components/ui/drawer.tsx",
-    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
-    "build-template/src/frontend/src/components/ui/form.tsx",
-    "build-template/src/frontend/src/components/ui/hover-card.tsx",
-    "build-template/src/frontend/src/components/ui/input-otp.tsx",
-    "build-template/src/frontend/src/components/ui/input.tsx",
-    "build-template/src/frontend/src/components/ui/label.tsx",
-    "build-template/src/frontend/src/components/ui/menubar.tsx",
-    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
-    "build-template/src/frontend/src/components/ui/pagination.tsx",
-    "build-template/src/frontend/src/components/ui/popover.tsx",
-    "build-template/src/frontend/src/components/ui/progress.tsx",
-    "build-template/src/frontend/src/components/ui/radio-group.tsx",
-    "build-template/src/frontend/src/components/ui/resizable.tsx",
-    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
-    "build-template/src/frontend/src/components/ui/select.tsx",
-    "build-template/src/frontend/src/components/ui/separator.tsx",
-    "build-template/src/frontend/src/components/ui/sheet.tsx",
-    "build-template/src/frontend/src/components/ui/sidebar.tsx",
-    "build-template/src/frontend/src/components/ui/skeleton.tsx",
-    "build-template/src/frontend/src/components/ui/slider.tsx",
-    "build-template/src/frontend/src/components/ui/sonner.tsx",
-    "build-template/src/frontend/src/components/ui/switch.tsx",
-    "build-template/src/frontend/src/components/ui/table.tsx",
-    "build-template/src/frontend/src/components/ui/tabs.tsx",
-    "build-template/src/frontend/src/components/ui/textarea.tsx",
-    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
-    "build-template/src/frontend/src/components/ui/toggle.tsx",
-    "build-template/src/frontend/src/components/ui/tooltip.tsx",
-    "build-template/src/frontend/src/hooks/use-mobile.tsx",
-    "build-template/src/frontend/src/lib/utils.ts",
-    "build-template/src/frontend/tsconfig.json",
-    "build-template/src/frontend/vite.config.js",
-    "build-template/tsconfig.json",
-    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/public/assets/generated/colonizers-emblem.dim_256x256.png",
-    "frontend/public/assets/generated/map-background.dim_1200x800.png",
-    "frontend/public/assets/generated/native-peoples-emblem.dim_256x256.png",
-    "frontend/src/App.tsx",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/CaptureProgressBar.tsx",
-    "frontend/src/components/GameBoard.tsx",
-    "frontend/src/components/GameLobby.tsx",
-    "frontend/src/components/GameOverScreen.tsx",
     "frontend/src/components/GameTimer.tsx",
-    "frontend/src/components/PlayerSlotCard.tsx",
-    "frontend/src/components/TerritoryLegend.tsx",
-    "frontend/src/components/UnitActionPanel.tsx",
-    "frontend/src/config.ts",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useGameEngine.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
     "frontend/src/pages/GamePage.tsx",
-    "frontend/src/types/game.ts",
-    "frontend/src/ui-summary.json",
-    "frontend/src/utils/StorageClient.ts",
-    "frontend/src/utils/botAI.ts",
-    "frontend/src/utils/gameInitializer.ts",
-    "frontend/src/utils/winConditions.ts",
-    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -1,242 +1,45 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "16th Century Land Conquest Game – Native Peoples vs Colonizers Frontend Implementation",
+  "title": "Black timer text and End Turn button",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Create game lobby screen with 8 configurable player slots, team assignment, and balanced team validation",
+      "id": "REQ-28",
+      "summary": "Update GameTimer text styling to render all timer text in black color regardless of warning/critical state transitions",
       "acceptanceCriteria": [
-        "8 player slots are shown on the lobby screen",
-        "Each slot has a Player/Bot toggle",
-        "Each slot is assigned to either Native Peoples or Colonizers team",
-        "Teams are 4 vs 4",
-        "Start Game button is disabled until all 8 slots are configured"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/types/game.ts",
-          "operation": "create",
-          "description": "Define TypeScript types for PlayerSlot (id, name, type: 'Player'|'Bot', team: 'NativePeoples'|'Colonizers'), LobbyState, and GameState including territory and unit data structures"
-        },
-        {
-          "path": "frontend/src/components/GameLobby.tsx",
-          "operation": "create",
-          "description": "Create the game lobby component displaying 8 PlayerSlotCard components in a grid layout with parchment-style background. Include team balance validation logic (must be 4v4) and a Start Game button that enables only when all slots are configured and balanced. Wire generated emblem images from frontend/public/assets/generated/native-peoples-emblem.dim_256x256.png and frontend/public/assets/generated/colonizers-emblem.dim_256x256.png to display team icons"
-        },
-        {
-          "path": "frontend/src/components/PlayerSlotCard.tsx",
-          "operation": "create",
-          "description": "Create a player slot card component with Player/Bot toggle using shadcn/ui Switch component, team dropdown (Native Peoples/Colonizers) using Select component, and name input field using Input component. Apply 16th-century styling with earthy tones and period typography"
-        },
-        {
-          "path": "frontend/src/pages/LobbyPage.tsx",
-          "operation": "create",
-          "description": "Create lobby page wrapper that renders GameLobby component and handles navigation to game board on Start Game click. Initialize 8 empty player slots in local state"
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add route for /lobby path rendering LobbyPage component. Set /lobby as the default landing route"
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Implement 2D top-down game board map with territory zones and unit rendering",
-      "acceptanceCriteria": [
-        "A top-down game map is rendered with at least 5 distinct land territory zones",
-        "Territories are visually distinguishable (neutral, native-controlled, colonizer-controlled)",
-        "Units for both teams are visible on the map",
-        "The map has a 16th-century aesthetic (earthy tones, period-appropriate visual style)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/GameBoard.tsx",
-          "operation": "create",
-          "description": "Create the main game board component using SVG or canvas rendering. Display the parchment map background image from frontend/public/assets/generated/map-background.dim_1200x800.png. Render at least 5 territory zones as SVG polygons or canvas shapes with distinct visual states for neutral, native-controlled, and colonizer-controlled territories (use forest green, terracotta, ochre color scheme). Render unit markers for both teams with appropriate iconography"
-        },
-        {
-          "path": "frontend/src/components/Territory.tsx",
-          "operation": "create",
-          "description": "Create Territory component representing a single territory zone with SVG/canvas rendering. Show territory ID, ownership state (neutral/native/colonizer) with color coding, and capture progress indicator. Apply 16th-century visual styling with earthy tones"
-        },
-        {
-          "path": "frontend/src/components/Unit.tsx",
-          "operation": "create",
-          "description": "Create Unit component for rendering individual game units on the map. Display unit position, team affiliation (using emblem icons), health bar, and selection state. Use distinct indigenous-inspired iconography for Native Peoples units and colonial-era iconography for Colonizers units"
-        },
-        {
-          "path": "frontend/src/hooks/useGameState.ts",
-          "operation": "create",
-          "description": "Create custom React hook for managing game state using React Query to poll the backend getGameSession method. Handle territory ownership array, unit positions array, and synchronize local frontend state with backend GameSessionView. Implement polling interval (e.g., every 2 seconds) to fetch updated game state"
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Implement turn-based movement and action mechanics for human players and AI bot logic",
-      "acceptanceCriteria": [
-        "Human player can select a unit and move it within valid range",
-        "Human player can perform at least two actions: attack and fortify/defend",
-        "Bot units automatically take actions each turn/tick without human input",
-        "Units display health bars",
-        "Invalid moves or actions are visually blocked"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/UnitActionPanel.tsx",
-          "operation": "create",
-          "description": "Create action panel component that appears when a unit is selected. Display action buttons for Move, Attack, and Fortify/Defend using shadcn/ui Button components. Show unit stats including health, attack, and movement range. Disable invalid actions visually"
-        },
-        {
-          "path": "frontend/src/hooks/useUnitActions.ts",
-          "operation": "create",
-          "description": "Create custom hook for handling unit selection, movement validation (check movement range), and executing actions (attack, fortify). Call backend updateUnitPosition when a unit moves. Implement client-side validation to block invalid moves before sending to backend"
-        },
-        {
-          "path": "frontend/src/utils/botAI.ts",
-          "operation": "create",
-          "description": "Create AI logic utility for bot-controlled units. Implement simple AI decision-making: select targets, move toward objectives (territories for Colonizers, defensive positions for Native Peoples), and execute actions automatically each game tick. Run bot logic for all bot-controlled player slots"
-        },
-        {
-          "path": "frontend/src/components/GameBoard.tsx",
-          "operation": "modify",
-          "description": "Add click handlers for unit selection and movement. Integrate UnitActionPanel rendering when a unit is selected. Implement visual feedback for valid move destinations (highlight valid tiles). Wire bot AI execution to run automatically for bot slots"
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Implement territory conquest mechanic with capture progress tracking and win condition detection",
-      "acceptanceCriteria": [
-        "Each territory has a capture progress indicator",
-        "A territory flips to Colonizer control when occupied uncontested long enough",
-        "A territory reverts to Native control when recaptured by Native units",
-        "All territories conquered triggers a Colonizer victory"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/CaptureProgressBar.tsx",
-          "operation": "create",
-          "description": "Create capture progress bar component using shadcn/ui Progress component. Display percentage of capture completion for a territory. Style with 16th-century aesthetic using earthy colors (ochre for neutral, green for native, terracotta for colonizer)"
-        },
-        {
-          "path": "frontend/src/hooks/useTerritoryCapture.ts",
-          "operation": "create",
-          "description": "Create custom hook for managing territory capture logic. Track which units are occupying each territory, calculate capture progress based on time occupied uncontested, and call backend updateTerritoryOwnership when a territory flips. Check win condition (all territories colonizer-controlled) after each territory update"
-        },
-        {
-          "path": "frontend/src/components/Territory.tsx",
-          "operation": "modify",
-          "description": "Integrate CaptureProgressBar component into Territory rendering. Update territory visual state dynamically based on ownership changes. Display capture progress only when a territory is being contested"
-        },
-        {
-          "path": "frontend/src/utils/winConditions.ts",
-          "operation": "create",
-          "description": "Create utility for checking win conditions. Implement checkColonizersWin (all territories conquered) and checkNativesWin (timer expired with territories remaining). Return winning team when condition is met"
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Implement 10-minute countdown timer with win condition logic and game-over screen",
-      "acceptanceCriteria": [
-        "A visible countdown timer starts at 10:00 when the game begins",
-        "Timer counts down in real time",
-        "When timer hits 0:00 and not all territories are conquered, Native Peoples win screen is shown",
-        "When all territories are conquered before timer ends, Colonizers win screen is shown",
-        "Game-over screen shows the winning team name and offers 'Play Again' and 'Return to Lobby' buttons"
+        "Match countdown text is black at all times during normal gameplay.",
+        "Conquest countdown text is black at all times, including when the conquest countdown is active.",
+        "Warning and critical visual states (orange/red) do not override the text color to a non-black value.",
+        "Timer remains legible against the parchment background."
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/GameTimer.tsx",
-          "operation": "create",
-          "description": "Create countdown timer component displaying time remaining in MM:SS format. Start at 10:00 and count down in real time. Position prominently at the top of the game board. Style with period-appropriate typography and parchment background"
-        },
-        {
-          "path": "frontend/src/hooks/useGameTimer.ts",
-          "operation": "create",
-          "description": "Create custom hook for managing game timer state. Use setInterval to decrement timer every second. Trigger Native Peoples win when timer reaches 0:00 and not all territories are conquered. Clear interval on game end"
-        },
-        {
-          "path": "frontend/src/components/GameOverScreen.tsx",
-          "operation": "create",
-          "description": "Create game-over modal overlay displaying the winning team name with appropriate emblem (native-peoples-emblem.dim_256x256.png or colonizers-emblem.dim_256x256.png from frontend/public/assets/generated). Include 'Play Again' button (resets game state) and 'Return to Lobby' button (navigates to /lobby). Apply 16th-century victory banner styling with ornate borders and period typography"
-        },
+          "operation": "modify",
+          "description": "Update the timer text styling so that both match countdown and conquest countdown labels and time values always render in black color. Ensure warning (orange) and critical (red) pulsing states only affect background or border indicators, not the text color itself. The text should remain black and legible against the parchment background at all times."
+        }
+      ]
+    },
+    {
+      "id": "REQ-29",
+      "summary": "Add an 'End Turn' button to the game HUD that allows human players to conclude their turn and advance to the next player",
+      "acceptanceCriteria": [
+        "An 'End Turn' button is visible on the game screen during a human player's turn.",
+        "Clicking 'End Turn' advances the turn to the next player.",
+        "The button is disabled or hidden when it is a bot's turn or during movement/action animations.",
+        "The button is styled with the existing parchment/period theme (earthy colors, period typography).",
+        "Bot turns continue to execute automatically without requiring the button."
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/pages/GamePage.tsx",
-          "operation": "create",
-          "description": "Create game page wrapper that renders GameBoard, GameTimer, and conditionally GameOverScreen components. Manage overall game flow: initialize game session via backend createGameSession on mount, run game loop with timer and bot AI, detect win conditions, and show game-over screen when game ends"
+          "operation": "modify",
+          "description": "Add an 'End Turn' button to the game HUD that is prominently visible during gameplay. The button should be styled consistently with the 16th-century parchment theme using the existing color palette (parchment, terracotta, etc.) and period fonts (Cinzel or IM Fell English). When clicked by a human player, the button should call the turn-advance logic from useGameEngine to conclude the current player's turn and move to the next player. The button must be disabled or hidden when it is not the local human player's turn (e.g., during bot turns or animations). Position the button in a convenient location within the existing HUD layout near other game controls."
         },
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/hooks/useGameEngine.ts",
           "operation": "modify",
-          "description": "Add route for /game path rendering GamePage component. Enable navigation from lobby to game page when Start Game is clicked"
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Apply consistent 16th-century colonial era visual theme across all UI screens",
-      "acceptanceCriteria": [
-        "Lobby, game board, and game-over screens share a consistent 16th-century parchment and earth-tone palette",
-        "Native Peoples team uses visually distinct indigenous-inspired iconography",
-        "Colonizers team uses visually distinct European colonial-era iconography",
-        "Typography has a period-appropriate style (serif or display font evocative of old manuscripts)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add global CSS custom properties for 16th-century color palette: forest green (#2d5016), ochre (#cc8800), terracotta (#c1440e), aged parchment (#f4e8d0), sepia brown (#704214), deep red (#8b0000), gold (#d4af37), navy (#1e3a5f). Import and apply a period-appropriate serif or display font (e.g., Cinzel, IM Fell English, or similar Google Font). Set base body background to parchment tone"
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend Tailwind theme with custom color palette matching 16th-century aesthetic: nativePeoples (green/terracotta shades), colonizers (red/gold/navy shades), parchment, sepia. Add custom font family for period typography. Configure theme to support earthy, historical styling across all components"
-        },
-        {
-          "path": "frontend/src/components/ThemeLayout.tsx",
-          "operation": "create",
-          "description": "Create a layout wrapper component applying consistent parchment-textured background, ornate borders, and period styling to all child pages. Use this as a wrapper in App.tsx for all routes to ensure consistent theming across lobby, game, and game-over screens"
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wrap all routes with ThemeLayout component to apply consistent 16th-century visual theme across the entire application"
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Wire generated static images for map background and team emblems into the game UI",
-      "acceptanceCriteria": [
-        "A parchment map background image is displayed on the game board",
-        "Native Peoples emblem is shown in the lobby and game UI for that team",
-        "Colonizers emblem is shown in the lobby and game UI for that team",
-        "All images load from frontend/public/assets/generated"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/GameBoard.tsx",
-          "operation": "modify",
-          "description": "Reference the parchment map background image at frontend/public/assets/generated/map-background.dim_1200x800.png as a background layer for the game board SVG/canvas. Ensure the image is loaded and rendered before game elements are drawn on top"
-        },
-        {
-          "path": "frontend/src/components/GameLobby.tsx",
-          "operation": "modify",
-          "description": "Reference the Native Peoples emblem at frontend/public/assets/generated/native-peoples-emblem.dim_256x256.png and Colonizers emblem at frontend/public/assets/generated/colonizers-emblem.dim_256x256.png. Display the appropriate emblem next to each team section in the lobby (e.g., above the 4 Native Peoples slots and 4 Colonizers slots)"
-        },
-        {
-          "path": "frontend/src/components/Unit.tsx",
-          "operation": "modify",
-          "description": "Reference the team emblems from frontend/public/assets/generated/native-peoples-emblem.dim_256x256.png and frontend/public/assets/generated/colonizers-emblem.dim_256x256.png to display small team icons on unit markers in the game board"
-        },
-        {
-          "path": "frontend/src/components/GameOverScreen.tsx",
-          "operation": "modify",
-          "description": "Reference the winning team's emblem image from frontend/public/assets/generated (native-peoples-emblem.dim_256x256.png or colonizers-emblem.dim_256x256.png) to display prominently on the victory screen alongside the winning team name"
+          "description": "Expose a function (e.g., endTurn or advanceTurn) that can be called by the End Turn button to programmatically conclude the current player's turn and advance to the next player. This function should handle all necessary state transitions including clearing selections, updating the current player index, and triggering bot AI if the next player is a bot. Ensure the function validates that it is the human player's turn before allowing the turn to advance."
         }
       ]
     }

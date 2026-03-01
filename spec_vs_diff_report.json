@@ -1,82 +1,15 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T20:59:38.101Z",
-  "summary": "The diff implements most of the required features including the game lobby (REQ-1), game board with SVG/canvas rendering (REQ-2), movement and action mechanics (REQ-3), territory conquest (REQ-4), game timer and win conditions (REQ-5), backend actor with game state (REQ-6), 16th-century visual theme (REQ-7), and static asset references (REQ-8). However, several gaps exist: the backend is missing stable storage, the backend getGameState is named getGameSession and lacks timer/unit state, and the static image files themselves are not present in the diff.",
-  "missing_requirements": [
-    {
-      "id": "REQ-6",
-      "requirement": "State is stored stably in the actor",
-      "reason": "The backend/main.mo uses 'let gameSessions = Map.empty<Text, GameSession>()' as a regular variable without the 'stable' keyword, meaning state is not preserved across canister upgrades.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "requirement": "Backend has a getGameState query call returning current territories, unit states, and timer",
-      "reason": "The backend exposes 'getGameSession' not 'getGameState', and the GameSession type does not include timer or full unit stats — only territoryOwnership and unitPositions mapped to Principal values, not actual game state data.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "requirement": "Parchment map background image, Native Peoples emblem, and Colonizers emblem are served as static assets from frontend/public/assets/generated",
-      "reason": "The diff only shows code referencing these image paths but none of the actual image files appear as added files in the diff summary.",
-      "evidence": [
-        "frontend/src/components/GameLobby.tsx",
-        "frontend/src/pages/GamePage.tsx",
-        "frontend/src/components/GameOverScreen.tsx"
-      ]
-    }
-  ],
-  "hallucinated_features": [
-    {
-      "description": "getAllGameSessions query call on the backend",
-      "reason": "The backend exposes a 'getAllGameSessions' function returning all sessions, which was not requested in REQ-6 or anywhere in the build request.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "description": "Internet Identity authentication integration including useInternetIdentity hook, InternetIdentityProvider, and AuthClient",
-      "reason": "The build request explicitly lists Internet Identity authentication as a non-goal, yet the frontend includes a full Internet Identity provider and auth client integration wired into the app.",
-      "evidence": [
-        "frontend/src/hooks/useInternetIdentity.ts",
-        "frontend/src/main.tsx",
-        "frontend/src/hooks/useActor.ts"
-      ]
-    }
-  ],
+  "generatedAt": "2026-03-01T23:24:14.617Z",
+  "summary": "Both REQ-28 and REQ-29 appear to be implemented in the diff. REQ-28 is addressed in GameTimer.tsx with black text colors applied to all timer labels and values, with warning/critical states only affecting background/border/animation. REQ-29 is addressed in GamePage.tsx with an End Turn button wired to the endTurn function from useGameEngine, using SkipForward icon and parchment-themed styling. The truncation of GamePage.tsx prevents full verification of the disable/hide logic and bot-turn handling, but the import of SkipForward and endTurn hook usage are visible.",
+  "missing_requirements": [],
+  "hallucinated_features": [],
   "confidence": 0.82,
   "changed_files": [
-    "all_files_summary.json",
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/CaptureProgressBar.tsx",
-    "frontend/src/components/GameBoard.tsx",
-    "frontend/src/components/GameLobby.tsx",
-    "frontend/src/components/GameOverScreen.tsx",
     "frontend/src/components/GameTimer.tsx",
-    "frontend/src/components/PlayerSlotCard.tsx",
-    "frontend/src/components/TerritoryLegend.tsx",
-    "frontend/src/components/UnitActionPanel.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useGameEngine.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
     "frontend/src/pages/GamePage.tsx",
-    "frontend/src/types/game.ts",
-    "frontend/src/utils/botAI.ts",
-    "frontend/src/utils/gameInitializer.ts",
-    "frontend/src/utils/winConditions.ts",
-    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

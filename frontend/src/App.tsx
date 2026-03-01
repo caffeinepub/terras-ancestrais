@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import type { PlayerSlot } from './types/game';
 import { GameLobby } from './components/GameLobby';
 import { GamePage } from './pages/GamePage';
+import { LandingScreen } from './components/LandingScreen';
+import { TutorialScreen } from './components/TutorialScreen';
+import type { PlayerSlot } from './types/game';
 
-type AppView = 'lobby' | 'game';
+type AppView = 'landing' | 'tutorial' | 'lobby' | 'game';
 
 export default function App() {
-  const [view, setView] = useState<AppView>('lobby');
-  const [players, setPlayers] = useState<PlayerSlot[]>([]);
+  const [view, setView] = useState<AppView>('landing');
+  const [players, setPlayers] = useState<PlayerSlot[] | null>(null);
 
   const handleStartGame = (selectedPlayers: PlayerSlot[]) => {
     setPlayers(selectedPlayers);
@@ -15,11 +17,29 @@ export default function App() {
   };
 
   const handleReturnToLobby = () => {
+    setPlayers(null);
     setView('lobby');
-    setPlayers([]);
   };
 
-  if (view === 'game' && players.length === 8) {
+  if (view === 'landing') {
+    return (
+      <LandingScreen
+        onPlayClick={() => setView('lobby')}
+        onTutorialClick={() => setView('tutorial')}
+      />
+    );
+  }
+
+  if (view === 'tutorial') {
+    return (
+      <TutorialScreen
+        onComplete={() => setView('landing')}
+        onSkip={() => setView('landing')}
+      />
+    );
+  }
+
+  if (view === 'game' && players && players.length > 0) {
     return (
       <GamePage
         players={players}

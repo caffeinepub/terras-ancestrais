@@ -168,3 +168,30 @@
     background: linear-gradient(90deg, oklch(0.38 0.14 145), oklch(0.52 0.16 145));
   }
 }
+
+/* Game-over screen animations */
+@keyframes gameOverEntrance {
+  from { opacity: 0; transform: scale(0.7) translateY(-30px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes emblemPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+
+@keyframes titleGlow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.8; }
+}
+
+/* Damage flash animation */
+@keyframes damageFlash {
+  0%   { filter: brightness(1); }
+  25%  { filter: brightness(2) saturate(0) sepia(1); }
+  100% { filter: brightness(1); }
+}
+
+.unit-damaged {
+  animation: damageFlash 0.4s ease-out forwards;
+}

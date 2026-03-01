@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "A 16th century team-based strategy/action game with two teams: Native Peoples (defenders) vs Colonizers (attackers). Up to 8 players, each choosable as player or bot. Colonizers must conquer the native lands within 10 minutes; if they fail, the Native Peoples win.",
+  "projectStateVersion": 13,
+  "summary": "A 16th century team-based strategy/action RPG with two teams: Native Peoples (defenders/guerrilla) vs Colonizers (attackers/expansion). Up to 8 players (human or bot), each choosing a faction and a class. Classes include Forest Warrior, Spirit Hunter, Shaman, and Sentinel for Natives; Musket Soldier, Captain, Engineer, and Missionary for Colonizers. Players gain XP and have talent trees with 2 specialization paths. The map features dense forests, open fields, strategic river, main village, and colonial fort under construction, with alternate routes, ambushes, elevated positions, and vision control. Win condition: Colonizers win by holding all 3 strategic points (village, river, resources) for 10 consecutive minutes; if they lose any point, the countdown resets; if Natives resist until the match time limit, Natives win. Strategic layer includes construction, resource control, progressive territorial advantage, and coordinated attacks. Atmosphere includes forest sounds, tribal drums, musket fire, and dynamic soundtrack.",
   "architectural_notes": [
     "2D top-down strategy/action game set in the 16th century",
-    "Win conditions: Colonizers conquer all native land territories within 10 minutes OR Native Peoples survive the full 10 minutes"
+    "Win condition reworked: Colonizers must hold all 3 strategic points simultaneously for 10 consecutive minutes (countdown resets on point loss); Natives win by surviving until match time limit",
+    "Each faction has 4 distinct classes with unique abilities, stats, and 2-path talent trees; RPG XP progression during match"
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Aged parchment texture map background with faint illustrated land and coastline markings in ink, earthy tan and sepia tones (map-background.dim_1200x800.png)\n- Circular tribal emblem with feathers, beads, and geometric indigenous patterns in terracotta, green, and gold tones (native-peoples-emblem.dim_256x256.png)\n- Circular heraldic emblem featuring a galleon ship, cross, and laurel wreath in deep red, gold, and navy tones (colonizers-emblem.dim_256x256.png)",
   "existing_features": [
     {
       "id": "feature-create-a-game-lobby-screen-where-8-player-slots-are-displayed-each-slot-must-allow-the-user-to-assign-it-as-player-human-controlled-or-bot-ai-controlled-choose-a-team-native-peoples-or-colonizers-and-enter-a-name-the-two-teams-must-be-balanced-4-vs-4-the-lobby-should-include-a-start-game-button-that-only-activates-when-all-8-slots-are-configured",
@@ -65,6 +65,174 @@
         "REQ-8"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-improve-bot-ai-decision-making-in-frontend-src-utils-botai-ts-to-make-bots-more-strategic-and-challenging-colonizer-bots-should-coordinate-territory-capture-by-prioritizing-the-nearest-uncaptured-territory-avoid-clustering-on-already-captured-zones-and-retreat-when-health-is-critically-low-native-peoples-bots-should-actively-intercept-incoming-colonizer-units-prioritize-defending-territories-under-active-capture-and-group-up-near-contested-zones-both-teams-should-factor-in-unit-health-when-choosing-actions",
+      "title": "Improve bot AI decision-making in `frontend/src/utils/botAI.ts` to make bots more strategic and challenging: Colonizer bots should coordinate territory capture by prioritizing the nearest uncaptured territory, avoid clustering on already-captured zones, and retreat when health is critically low. Native Peoples bots should actively intercept incoming Colonizer units, prioritize defending territories under active capture, and group up near contested zones. Both teams should factor in unit health when choosing actions.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-adjust-game-balance-parameters-in-frontend-src-hooks-usegameengine-ts-and-frontend-src-utils-gameinitializer-ts-increase-the-time-required-to-capture-a-territory-so-native-peoples-have-a-better-chance-to-respond-slightly-reduce-colonizer-unit-attack-power-or-increase-native-peoples-unit-health-to-create-a-fairer-contest-ensure-the-10-minute-timer-provides-a-tense-but-achievable-challenge-for-both-sides",
+      "title": "Adjust game balance parameters in `frontend/src/hooks/useGameEngine.ts` and `frontend/src/utils/gameInitializer.ts`: increase the time required to capture a territory so Native Peoples have a better chance to respond; slightly reduce Colonizer unit attack power or increase Native Peoples unit health to create a fairer contest; ensure the 10-minute timer provides a tense but achievable challenge for both sides.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-sound-effects-and-visual-animations-throughout-gameplay-create-a-frontend-src-hooks-usesoundeffects-ts-hook-that-plays-short-audio-cues-using-the-web-audio-api-or-html5-audio-for-unit-selection-unit-movement-attack-action-territory-capture-start-territory-captured-and-game-over-add-css-canvas-animations-in-gameboard-tsx-for-a-flash-effect-when-a-unit-is-attacked-a-ripple-or-pulse-effect-when-a-territory-begins-being-captured-and-a-celebration-animation-on-the-game-over-screen",
+      "title": "Add sound effects and visual animations throughout gameplay. Create a `frontend/src/hooks/useSoundEffects.ts` hook that plays short audio cues (using the Web Audio API or HTML5 Audio) for: unit selection, unit movement, attack action, territory capture start, territory captured, and game over. Add CSS/canvas animations in `GameBoard.tsx` for: a flash effect when a unit is attacked, a ripple or pulse effect when a territory begins being captured, and a celebration animation on the game-over screen.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-the-visual-quality-of-the-map-in-frontend-src-components-gameboard-tsx-render-territories-with-textured-fills-using-the-parchment-background-image-as-a-base-layer-differentiate-territory-types-with-distinct-earthy-color-overlays-forest-green-for-forests-sandy-ochre-for-plains-terracotta-for-hills-draw-territory-borders-with-a-hand-drawn-rough-stroke-style-add-decorative-terrain-icons-tree-clusters-hill-silhouettes-drawn-on-the-canvas-inside-territory-bounds-ensure-unit-icons-reflect-their-team-using-period-appropriate-glyphs-feather-for-native-peoples-cross-sword-for-colonizers",
+      "title": "Improve the visual quality of the map in `frontend/src/components/GameBoard.tsx`: render territories with textured fills using the parchment background image as a base layer; differentiate territory types with distinct earthy color overlays (forest green for forests, sandy ochre for plains, terracotta for hills); draw territory borders with a hand-drawn/rough stroke style; add decorative terrain icons (tree clusters, hill silhouettes) drawn on the canvas inside territory bounds; ensure unit icons reflect their team using period-appropriate glyphs (feather for Native Peoples, cross/sword for Colonizers).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-new-gameplay-mechanics-to-enrich-strategic-depth-1-terrain-effects-forest-territories-grant-a-defense-bonus-20-health-reduction-on-attacks-to-any-unit-inside-them-plains-territories-give-a-movement-speed-bonus-1-movement-range-2-fortify-ability-when-a-unit-uses-the-fortify-action-it-gains-a-temporary-defense-shield-for-2-turns-that-reduces-incoming-damage-by-50-3-morale-system-when-a-team-loses-a-territory-all-their-units-suffer-a-small-temporary-attack-debuff-10-for-one-turn-implement-terrain-type-data-in-frontend-src-utils-gameinitializer-ts-and-apply-effects-in-frontend-src-hooks-usegameengine-ts-and-frontend-src-pages-gamepage-tsx",
+      "title": "Add new gameplay mechanics to enrich strategic depth: (1) Terrain effects — forest territories grant a defense bonus (+20% health reduction on attacks) to any unit inside them; plains territories give a movement speed bonus (+1 movement range). (2) Fortify ability — when a unit uses the Fortify action, it gains a temporary defense shield for 2 turns that reduces incoming damage by 50%. (3) Morale system — when a team loses a territory, all their units suffer a small temporary attack debuff (-10%) for one turn. Implement terrain type data in `frontend/src/utils/gameInitializer.ts`, and apply effects in `frontend/src/hooks/useGameEngine.ts` and `frontend/src/pages/GamePage.tsx`.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-unit-selection-and-movement-controls-in-frontend-src-components-gameboard-tsx-and-frontend-src-pages-gamepage-tsx-to-make-them-more-intuitive-highlight-selectable-human-controlled-units-with-a-clear-visible-indicator-e-g-glowing-border-or-pulsing-ring-so-players-can-easily-identify-which-units-they-can-interact-with-show-the-valid-movement-range-as-a-shaded-overlay-on-the-canvas-when-a-unit-is-selected-allow-players-to-cancel-a-selection-by-clicking-on-an-empty-area-or-pressing-escape",
+      "title": "Improve unit selection and movement controls in `frontend/src/components/GameBoard.tsx` and `frontend/src/pages/GamePage.tsx` to make them more intuitive: highlight selectable human-controlled units with a clear visible indicator (e.g., glowing border or pulsing ring) so players can easily identify which units they can interact with; show the valid movement range as a shaded overlay on the canvas when a unit is selected; allow players to cancel a selection by clicking on an empty area or pressing Escape.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-the-frontend-src-components-unitactionpanel-tsx-action-panel-to-make-actions-clearer-and-easier-to-trigger-display-large-labeled-buttons-with-tooltips-or-short-descriptions-for-move-attack-fortify-and-deselect-visually-disable-grey-out-actions-that-are-not-currently-available-for-the-selected-unit-e-g-attack-when-no-enemy-is-in-range-show-a-brief-confirmation-message-or-visual-feedback-after-an-action-is-performed",
+      "title": "Improve the `frontend/src/components/UnitActionPanel.tsx` action panel to make actions clearer and easier to trigger: display large, labeled buttons with tooltips or short descriptions for Move, Attack, Fortify, and Deselect; visually disable (grey out) actions that are not currently available for the selected unit (e.g., Attack when no enemy is in range); show a brief confirmation message or visual feedback after an action is performed.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-in-game-controls-guide-or-help-overlay-in-frontend-src-pages-gamepage-tsx-provide-a-small-button-that-when-clicked-opens-a-brief-overlay-listing-the-basic-controls-click-to-select-unit-click-destination-to-move-use-action-panel-for-attack-fortify-etc-the-overlay-should-be-dismissible-by-clicking-outside-it-or-pressing-escape",
+      "title": "Add an in-game controls guide or help overlay in `frontend/src/pages/GamePage.tsx`: provide a small '?' button that, when clicked, opens a brief overlay listing the basic controls (click to select unit, click destination to move, use action panel for attack/fortify, etc.). The overlay should be dismissible by clicking outside it or pressing Escape.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-unit-movement-speed-pixels-per-tick-or-movement-animation-duration-in-frontend-src-hooks-usegameengine-ts-and-frontend-src-utils-gameinitializer-ts-so-that-units-respond-faster-to-player-commands-reducing-perceived-input-lag-also-increase-the-base-movement-range-for-all-units-by-1-tile-so-players-can-reposition-more-freely-each-turn",
+      "title": "Increase unit movement speed (pixels per tick or movement animation duration) in `frontend/src/hooks/useGameEngine.ts` and `frontend/src/utils/gameInitializer.ts` so that units respond faster to player commands, reducing perceived input lag. Also increase the base movement range for all units by 1 tile so players can reposition more freely each turn.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-4-distinct-classes-per-faction-with-unique-stats-and-abilities-native-peoples-1-forest-warrior-melee-specialist-damage-bonus-when-exiting-forest-tiles-short-camouflage-ability-2-spirit-hunter-ranged-bow-attacks-enemy-marking-ability-deployable-natural-traps-3-shaman-ally-healing-spiritual-protection-buff-enemy-weakening-debuff-4-sentinel-defense-specialist-builds-natural-barricades-boosts-village-defense-colonizers-1-musket-soldier-high-ranged-damage-slow-reload-mechanic-open-field-bonus-2-captain-nearby-ally-attack-defense-buff-defensive-formation-ability-3-engineer-constructs-towers-and-fortresses-repairs-structures-builds-barricades-4-missionary-ally-healing-reduces-enemy-aggression-attack-debuff-each-class-must-have-distinct-base-stats-health-attack-movement-range-attack-range-defined-in-frontend-src-types-game-ts-and-frontend-src-utils-gameinitializer-ts-class-selection-must-be-added-to-the-lobby-slot-configuration-in-frontend-src-components-gamelobby-tsx-and-frontend-src-components-playerslotcard-tsx",
+      "title": "Add 4 distinct classes per faction with unique stats and abilities. Native Peoples: (1) Forest Warrior — melee specialist, damage bonus when exiting forest tiles, short camouflage ability; (2) Spirit Hunter — ranged bow attacks, enemy-marking ability, deployable natural traps; (3) Shaman — ally healing, spiritual protection buff, enemy weakening debuff; (4) Sentinel — defense specialist, builds natural barricades, boosts village defense. Colonizers: (1) Musket Soldier — high ranged damage, slow reload mechanic, open-field bonus; (2) Captain — nearby ally attack/defense buff, defensive formation ability; (3) Engineer — constructs towers and fortresses, repairs structures, builds barricades; (4) Missionary — ally healing, reduces enemy aggression (attack debuff). Each class must have distinct base stats (health, attack, movement range, attack range) defined in `frontend/src/types/game.ts` and `frontend/src/utils/gameInitializer.ts`. Class selection must be added to the lobby slot configuration in `frontend/src/components/GameLobby.tsx` and `frontend/src/components/PlayerSlotCard.tsx`.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-in-match-rpg-progression-system-units-gain-xp-for-defending-a-strategic-point-xp-per-tick-while-in-contested-territory-conquering-a-territory-xp-on-capture-assisting-an-ally-kill-xp-and-eliminating-an-enemy-unit-xp-when-a-unit-reaches-a-xp-threshold-it-levels-up-max-level-3-within-a-match-increasing-its-base-stats-at-level-2-each-unit-unlocks-1-of-2-specialization-paths-the-player-or-bot-ai-selects-a-path-that-grants-1-passive-and-1-active-ability-upgrade-display-current-level-and-xp-bar-on-each-unit-s-health-bar-area-on-the-canvas-in-frontend-src-components-gameboard-tsx-define-xp-thresholds-and-per-event-xp-values-in-frontend-src-utils-gameinitializer-ts-and-apply-xp-logic-in-frontend-src-hooks-usegameengine-ts",
+      "title": "Implement an in-match RPG progression system. Units gain XP for: defending a strategic point (+XP per tick while in contested territory), conquering a territory (+XP on capture), assisting an ally kill (+XP), and eliminating an enemy unit (+XP). When a unit reaches a XP threshold, it levels up (max level 3 within a match), increasing its base stats. At level 2, each unit unlocks 1 of 2 specialization paths; the player (or bot AI) selects a path that grants 1 passive and 1 active ability upgrade. Display current level and XP bar on each unit's health bar area on the canvas in `frontend/src/components/GameBoard.tsx`. Define XP thresholds and per-event XP values in `frontend/src/utils/gameInitializer.ts` and apply XP logic in `frontend/src/hooks/useGameEngine.ts`.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rework-the-win-condition-in-frontend-src-utils-winconditions-ts-and-frontend-src-hooks-usegameengine-ts-colonizers-win-only-when-they-simultaneously-hold-all-3-strategic-points-village-river-resources-for-a-continuous-10-minute-countdown-the-countdown-starts-the-moment-all-3-points-are-held-at-once-if-colonizers-lose-control-of-any-single-point-the-countdown-resets-to-zero-if-the-match-time-limit-expires-and-colonizers-have-not-completed-the-10-minute-hold-native-peoples-win-update-frontend-src-components-gametimer-tsx-to-display-both-the-match-time-remaining-and-the-current-conquest-countdown-showing-conquest-mm-ss-when-active-and-resetting-visually-when-the-countdown-resets-update-frontend-src-pages-gamepage-tsx-to-wire-the-new-dual-timer-state",
+      "title": "Rework the win condition in `frontend/src/utils/winConditions.ts` and `frontend/src/hooks/useGameEngine.ts`. Colonizers win only when they simultaneously hold all 3 strategic points (Village, River, Resources) for a continuous 10-minute countdown. The countdown starts the moment all 3 points are held at once; if Colonizers lose control of any single point, the countdown resets to zero. If the match time limit expires and Colonizers have not completed the 10-minute hold, Native Peoples win. Update `frontend/src/components/GameTimer.tsx` to display both the match time remaining and the current conquest countdown (showing 'Conquest: MM:SS' when active, and resetting visually when the countdown resets). Update `frontend/src/pages/GamePage.tsx` to wire the new dual-timer state.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-game-map-in-frontend-src-utils-gameinitializer-ts-and-frontend-src-components-gameboard-tsx-to-include-the-following-distinct-zones-1-dense-forest-areas-2-3-territories-that-provide-a-native-defense-advantage-and-enable-camouflage-2-open-fields-2-3-territories-that-give-colonizers-movement-and-range-bonuses-3-strategic-river-territory-that-must-be-crossed-via-chokepoint-bridges-4-main-village-territory-one-of-the-3-strategic-points-5-colonial-fort-territory-one-of-the-3-strategic-points-starts-partially-constructed-the-map-must-include-at-least-2-alternate-routes-between-key-zones-1-2-elevated-position-territories-granting-a-ranged-attack-bonus-10-damage-and-a-partial-fog-of-war-system-where-territories-more-than-2-tiles-away-from-any-friendly-unit-are-obscured-on-the-canvas-tag-each-territory-with-its-type-forest-open-field-river-village-fort-and-strategic-point-status-apply-terrain-bonuses-already-defined-in-the-game-engine-to-these-new-territory-types",
+      "title": "Redesign the game map in `frontend/src/utils/gameInitializer.ts` and `frontend/src/components/GameBoard.tsx` to include the following distinct zones: (1) Dense Forest areas (2–3 territories) that provide a native defense advantage and enable camouflage; (2) Open Fields (2–3 territories) that give Colonizers movement and range bonuses; (3) Strategic River territory that must be crossed via chokepoint bridges; (4) Main Village territory (one of the 3 strategic points); (5) Colonial Fort territory (one of the 3 strategic points, starts partially constructed). The map must include at least 2 alternate routes between key zones, 1–2 elevated position territories granting a ranged attack bonus (+10% damage), and a partial fog-of-war system where territories more than 2 tiles away from any friendly unit are obscured on the canvas. Tag each territory with its type (forest, open-field, river, village, fort) and strategic-point status. Apply terrain bonuses already defined in the game engine to these new territory types.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-construction-and-resource-control-strategic-layer-engineer-units-colonizer-class-can-perform-a-build-action-on-designated-buildable-tiles-adjacent-to-the-fort-territory-to-construct-towers-or-fortresses-towers-increase-the-attack-range-of-all-nearby-colonizer-units-by-1-tile-fortresses-reduce-incoming-damage-to-units-inside-by-25-sentinel-units-native-peoples-class-can-perform-a-destroy-action-on-enemy-constructions-to-dismantle-them-over-2-turns-track-construction-state-built-destroyed-in-progress-per-tile-in-the-game-state-in-frontend-src-types-game-ts-render-constructions-on-the-canvas-in-frontend-src-components-gameboard-tsx-using-period-appropriate-icons-tower-silhouette-for-tower-fort-icon-for-fortress-apply-construction-effects-in-frontend-src-hooks-usegameengine-ts-bot-engineers-should-prioritize-building-when-near-the-fort-bot-sentinels-should-prioritize-destroying-enemy-constructions",
+      "title": "Add a construction and resource control strategic layer. Engineer units (Colonizer class) can perform a 'Build' action on designated buildable tiles adjacent to the Fort territory to construct Towers or Fortresses. Towers increase the attack range of all nearby Colonizer units by +1 tile; Fortresses reduce incoming damage to units inside by 25%. Sentinel units (Native Peoples class) can perform a 'Destroy' action on enemy constructions to dismantle them over 2 turns. Track construction state (built/destroyed/in-progress) per tile in the game state in `frontend/src/types/game.ts`. Render constructions on the canvas in `frontend/src/components/GameBoard.tsx` using period-appropriate icons (tower silhouette for Tower, fort icon for Fortress). Apply construction effects in `frontend/src/hooks/useGameEngine.ts`. Bot Engineers should prioritize building when near the Fort; bot Sentinels should prioritize destroying enemy constructions.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-dynamic-atmosphere-system-in-frontend-src-hooks-usesoundeffects-ts-add-the-following-procedural-web-audio-api-sound-cues-1-forest-ambient-loop-soft-wind-and-bird-sounds-when-the-active-unit-is-in-a-forest-territory-2-tribal-drums-a-rhythmic-low-frequency-drum-pattern-that-plays-as-background-ambience-for-the-native-peoples-turn-3-musket-fire-a-sharp-percussive-crack-when-a-musket-soldier-attacks-4-wooden-construction-mallet-and-wood-tapping-sound-when-an-engineer-builds-5-conquest-countdown-fanfare-a-tense-escalating-drone-that-begins-when-the-colonizer-conquest-countdown-starts-and-stops-resets-when-a-strategic-point-is-lost-implement-smooth-audio-cross-fading-between-ambient-states-normal-gameplay-vs-conquest-countdown-active",
+      "title": "Enhance the dynamic atmosphere system in `frontend/src/hooks/useSoundEffects.ts`. Add the following procedural Web Audio API sound cues: (1) Forest ambient loop — soft wind and bird sounds when the active unit is in a forest territory; (2) Tribal drums — a rhythmic low-frequency drum pattern that plays as background ambience for the Native Peoples turn; (3) Musket fire — a sharp percussive crack when a Musket Soldier attacks; (4) Wooden construction — mallet-and-wood tapping sound when an Engineer builds; (5) Conquest countdown fanfare — a tense, escalating drone that begins when the Colonizer conquest countdown starts and stops/resets when a strategic point is lost. Implement smooth audio cross-fading between ambient states (normal gameplay vs. conquest countdown active).",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-new-static-image-assets-for-the-redesigned-map-and-new-factions-required-images-1-a-redesigned-parchment-map-background-featuring-forests-open-fields-a-river-a-village-and-a-colonial-fort-silhouette-2-a-forest-warrior-class-emblem-feather-and-tomahawk-motif-3-a-spirit-hunter-class-emblem-bow-and-arrow-with-spirit-glow-motif-4-a-shaman-class-emblem-staff-and-spirit-smoke-motif-5-a-sentinel-class-emblem-shield-and-barricade-motif-6-a-musket-soldier-class-emblem-musket-and-powder-horn-motif-7-a-captain-class-emblem-sword-and-formation-flag-motif-8-an-engineer-class-emblem-hammer-and-tower-motif-9-a-missionary-class-emblem-cross-and-dove-motif-serve-all-images-as-static-assets-from-frontend-public-assets-generated-render-class-emblems-in-the-lobby-slot-cards-next-to-the-class-selector-and-on-the-unit-info-panel-during-gameplay",
+      "title": "Generate new static image assets for the redesigned map and new factions. Required images: (1) A redesigned parchment map background featuring forests, open fields, a river, a village, and a colonial fort silhouette; (2) A Forest Warrior class emblem (feather-and-tomahawk motif); (3) A Spirit Hunter class emblem (bow-and-arrow with spirit glow motif); (4) A Shaman class emblem (staff-and-spirit-smoke motif); (5) A Sentinel class emblem (shield-and-barricade motif); (6) A Musket Soldier class emblem (musket-and-powder-horn motif); (7) A Captain class emblem (sword-and-formation-flag motif); (8) An Engineer class emblem (hammer-and-tower motif); (9) A Missionary class emblem (cross-and-dove motif). Serve all images as static assets from `frontend/public/assets/generated`. Render class emblems in the lobby slot cards next to the class selector and on the unit info panel during gameplay.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-tutorial-option-on-the-initial-screen-before-the-lobby-when-the-app-first-loads-display-a-landing-title-screen-that-presents-two-options-play-proceeds-to-the-existing-gamelobby-and-tutorial-launches-a-guided-tutorial-mode-the-landing-screen-must-use-the-existing-16th-century-parchment-visual-theme-consistently-with-the-rest-of-the-game",
+      "title": "Add a Tutorial option on the initial screen (before the lobby). When the app first loads, display a landing/title screen that presents two options: 'Play' (proceeds to the existing GameLobby) and 'Tutorial' (launches a guided tutorial mode). The landing screen must use the existing 16th-century parchment visual theme consistently with the rest of the game.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-tutorial-mode-that-guides-new-players-through-the-core-mechanics-step-by-step-the-tutorial-must-cover-1-map-overview-and-territory-types-forest-open-field-river-village-fort-2-selecting-and-moving-a-unit-3-performing-actions-attack-fortify-class-abilities-4-the-conquest-mechanic-and-strategic-points-5-the-win-conditions-for-both-teams-6-the-rpg-progression-system-xp-leveling-talent-paths-the-tutorial-should-use-an-interactive-walkthrough-format-with-highlighted-ui-elements-and-instructional-overlays-allowing-the-player-to-progress-at-their-own-pace-via-a-next-button-a-skip-tutorial-button-must-be-available-at-any-step-to-exit-and-return-to-the-landing-screen",
+      "title": "Create a Tutorial mode that guides new players through the core mechanics step by step. The tutorial must cover: (1) map overview and territory types (forest, open field, river, village, fort); (2) selecting and moving a unit; (3) performing actions (Attack, Fortify, class abilities); (4) the conquest mechanic and strategic points; (5) the win conditions for both teams; (6) the RPG progression system (XP, leveling, talent paths). The tutorial should use an interactive walkthrough format with highlighted UI elements and instructional overlays, allowing the player to progress at their own pace via a 'Next' button. A 'Skip Tutorial' button must be available at any step to exit and return to the landing screen.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-app-tsx-to-introduce-a-new-application-view-state-for-the-landing-screen-and-the-tutorial-so-that-the-app-renders-1-the-landing-screen-when-no-game-session-is-active-and-the-tutorial-has-not-been-launched-2-the-tutorial-screen-when-the-player-selects-tutorial-and-3-the-existing-gamelobby-gamepage-flow-when-the-player-selects-play-no-changes-should-be-made-to-gamelobby-gamepage-or-any-other-existing-component-beyond-wiring-the-new-view-state",
+      "title": "Update `frontend/src/App.tsx` to introduce a new application view state for the landing screen and the tutorial, so that the app renders: (1) the landing screen when no game session is active and the tutorial has not been launched, (2) the tutorial screen when the player selects 'Tutorial', and (3) the existing GameLobby/GamePage flow when the player selects 'Play'. No changes should be made to GameLobby, GamePage, or any other existing component beyond wiring the new view state.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-components-gametimer-tsx-update-the-timer-text-styling-so-that-both-the-match-countdown-and-the-conquest-countdown-labels-and-time-values-are-rendered-in-black-color-regardless-of-warning-critical-state-transitions-ensure-the-pulsing-warning-orange-and-critical-red-states-only-affect-background-or-border-indicators-not-the-text-color-itself",
+      "title": "In `frontend/src/components/GameTimer.tsx`, update the timer text styling so that both the match countdown and the conquest countdown labels and time values are rendered in black color regardless of warning/critical state transitions. Ensure the pulsing warning (orange) and critical (red) states only affect background or border indicators, not the text color itself.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-end-turn-button-to-the-game-hud-in-frontend-src-pages-gamepage-tsx-the-button-must-be-prominently-visible-during-gameplay-styled-consistently-with-the-16th-century-parchment-theme-when-a-human-controlled-player-clicks-end-turn-the-current-player-s-turn-is-concluded-and-the-game-engine-advances-to-the-next-player-s-turn-calling-the-appropriate-turn-advance-logic-in-frontend-src-hooks-usegameengine-ts-the-button-should-be-disabled-or-hidden-when-it-is-not-the-local-human-player-s-turn-e-g-during-bot-turns-or-animations",
+      "title": "Add an 'End Turn' button to the game HUD in `frontend/src/pages/GamePage.tsx`. The button must be prominently visible during gameplay, styled consistently with the 16th-century parchment theme. When a human-controlled player clicks 'End Turn', the current player's turn is concluded and the game engine advances to the next player's turn (calling the appropriate turn-advance logic in `frontend/src/hooks/useGameEngine.ts`). The button should be disabled or hidden when it is not the local human player's turn (e.g., during bot turns or animations).",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -98,6 +266,102 @@
       "reqIds": [
         "REQ-6"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Improve bot AI intelligence for more challenging and strategic gameplay",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Adjust team balance and timing between Colonizers and Native Peoples",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add sound effects and animations to gameplay interactions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Improve map visuals with better tiles, terrain, and art",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add new gameplay mechanics (e.g. new unit actions, terrain effects, special abilities)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Reduce game timer from 10 minutes to 5 minutes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Make unit controls and gameplay easier and more intuitive for players",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add 4 distinct classes per faction (Forest Warrior, Spirit Hunter, Shaman, Sentinel for Natives; Musket Soldier, Captain, Engineer, Missionary for Colonizers) with unique abilities and stats",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Implement RPG progression system: XP gain from defending, conquering, assisting, and eliminating enemies; talent trees with 2 specialization paths per class; active and passive abilities",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Rework win condition: Colonizers must hold all 3 strategic points (village, river, resources) simultaneously for 10 minutes; countdown resets if any point is lost; Natives win if they resist until match time limit",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Redesign map with dense forests (native advantage), open fields (colonizer advantage), strategic river, main village, colonial fort under construction, alternate routes, elevated positions, and vision/fog-of-war control",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add construction and resource control strategic layer: Colonizers protect engineers to build towers/fortresses; Natives destroy constructions and interrupt domination",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Dynamic atmosphere: forest ambient sounds, tribal drums, musket fire, wooden construction sounds, and dynamic soundtrack change when conquest countdown begins",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Add a tutorial option at the start of the game that teaches players the basic mechanics and controls",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Display game timer text in black color",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add an 'End Turn' button that players press to finish their turn",
+      "reqIds": [],
       "status": "pending"
     }
   ],
