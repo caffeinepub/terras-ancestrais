@@ -1,0 +1,178 @@
+{
+  "kind": "build_request",
+  "title": "16th Century Land Conquest Game – Native Peoples vs Colonizers",
+  "projectName": "Terra Defenders",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a game lobby screen where 8 player slots are displayed. Each slot must allow the user to assign it as 'Player' (human-controlled) or 'Bot' (AI-controlled), choose a team (Native Peoples or Colonizers), and enter a name. The two teams must be balanced (4 vs 4). The lobby should include a 'Start Game' button that only activates when all 8 slots are configured.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "o jogo deve ter 8 pessoas e pode escolher se e player ou bot"
+        ]
+      },
+      "acceptanceCriteria": [
+        "8 player slots are shown on the lobby screen",
+        "Each slot has a Player/Bot toggle",
+        "Each slot is assigned to either Native Peoples or Colonizers team",
+        "Teams are 4 vs 4",
+        "Start Game button is disabled until all 8 slots are configured"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement the main game board as a 2D top-down map representing a 16th-century landscape with distinct land territories. The map must show territory zones that Colonizers can capture. Native Peoples units defend these territories. The game is rendered using React with a canvas or SVG-based approach for the map and units.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "os povos nativos devem proteger suas terras e os colonizadores conquistalas"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A top-down game map is rendered with at least 5 distinct land territory zones",
+        "Territories are visually distinguishable (neutral, native-controlled, colonizer-controlled)",
+        "Units for both teams are visible on the map",
+        "The map has a 16th-century aesthetic (earthy tones, period-appropriate visual style)"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement turn-based or real-time movement and action mechanics: human-controlled players can select and move their unit and perform actions (attack, defend, fortify territory) via click/tap. Bot-controlled slots execute AI logic automatically. Units should have basic stats (health, attack, movement range).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "pode escolher se e player ou bot"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Human player can select a unit and move it within valid range",
+        "Human player can perform at least two actions: attack and fortify/defend",
+        "Bot units automatically take actions each turn/tick without human input",
+        "Units display health bars",
+        "Invalid moves or actions are visually blocked"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement the territory conquest mechanic: a territory is 'conquered' by the Colonizers when one or more Colonizer units occupy it uncontested for a set duration. Conquered territories change visual state. The Colonizers win condition is met when all territories are conquered. Track conquest progress visually (e.g., a per-territory capture bar).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "os colonizadores conseguirem conquistar as terras"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each territory has a capture progress indicator",
+        "A territory flips to Colonizer control when occupied uncontested long enough",
+        "A territory reverts to Native control when recaptured by Native units",
+        "All territories conquered triggers a Colonizer victory"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement a 10-minute countdown game timer displayed prominently during gameplay. When the timer reaches zero and the Colonizers have NOT conquered all territories, the Native Peoples win. If Colonizers conquer all territories before the timer expires, they win immediately. Display a game-over screen announcing the winning team with a 'Play Again' and 'Return to Lobby' option.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "o jogo acaba se os colonizadores conseguirem conquistar as terras durante 10 minutos se nao conseguirem os povos nativos ganham"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A visible countdown timer starts at 10:00 when the game begins",
+        "Timer counts down in real time",
+        "When timer hits 0:00 and not all territories are conquered, Native Peoples win screen is shown",
+        "When all territories are conquered before timer ends, Colonizers win screen is shown",
+        "Game-over screen shows the winning team name and offers 'Play Again' and 'Return to Lobby' buttons"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Store game session state (active game, territory ownership, unit positions, timer, scores) in the Motoko backend actor so that game state persists and can be queried by the frontend. Expose query and update calls for: creating a game session, updating territory ownership, updating unit positions, and retrieving the current game state.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend actor has a createGame update call that initializes a session with 8 player slots and territory state",
+        "Backend has an updateTerritory call to record territory ownership changes",
+        "Backend has a getGameState query call returning current territories, unit states, and timer",
+        "State is stored stably in the actor"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Apply a rich 16th-century colonial era visual theme across the entire UI: earthy and natural color palette (forest greens, ochre, terracotta, aged parchment backgrounds), period-inspired typography, illustrated-style map tiles, and historically-evocative iconography for both teams (feathers and tribal motifs for Native Peoples; galleons, crosses, and armor for Colonizers). Apply the theme consistently from lobby to game board to game-over screen.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "se passa no seculo xvi"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Lobby, game board, and game-over screens share a consistent 16th-century parchment and earth-tone palette",
+        "Native Peoples team uses visually distinct indigenous-inspired iconography",
+        "Colonizers team uses visually distinct European colonial-era iconography",
+        "Typography has a period-appropriate style (serif or display font evocative of old manuscripts)"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Generate and render custom static images for the game: a parchment-textured map background, a Native Peoples team emblem, and a Colonizers team emblem. Serve these as static assets from frontend/public/assets/generated.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A parchment map background image is displayed on the game board",
+        "Native Peoples emblem is shown in the lobby and game UI for that team",
+        "Colonizers emblem is shown in the lobby and game UI for that team",
+        "All images load from frontend/public/assets/generated"
+      ]
+    }
+  ],
+  "constraints": [
+    "All game logic and state management must remain within the single Motoko backend actor",
+    "Do not use WebSockets or real-time push; use polling or React Query to sync game state",
+    "Do not use external game engines (Unity, Phaser); use React + canvas/SVG for rendering",
+    "Immutable frontend paths must not be modified"
+  ],
+  "nonGoals": [
+    "Online multiplayer over the network (all 8 players are on the same device session)",
+    "Persistent player accounts or leaderboards",
+    "3D graphics or complex animations",
+    "Audio or sound effects",
+    "Internet Identity authentication"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Aged parchment texture map background with faint illustrated land and coastline markings in ink, earthy tan and sepia tones (map-background.dim_1200x800.png)",
+      "Circular tribal emblem with feathers, beads, and geometric indigenous patterns in terracotta, green, and gold tones (native-peoples-emblem.dim_256x256.png)",
+      "Circular heraldic emblem featuring a galleon ship, cross, and laurel wreath in deep red, gold, and navy tones (colonizers-emblem.dim_256x256.png)"
+    ],
+    "edits": []
+  }
+}

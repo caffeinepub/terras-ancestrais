@@ -1,0 +1,20 @@
+{
+  "frontend/src/index.css": "Global styles with 16th-century parchment color palette using OKLCH tokens, imports Cinzel and IM Fell English fonts, and defines game-specific utility classes for team colors, health bars, and capture progress bars.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with period-appropriate font families (Cinzel, IM Fell English), custom game color tokens (parchment, sepia, ochre, terracotta, forest-green, native-green, colonizer-red), and animation keyframes for the game UI.",
+  "frontend/src/types/game.ts": "TypeScript type definitions for all game entities including PlayerSlot, GameUnit, Territory, GameState, Position, and related enums for teams, ownership, and game status.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend integration covering createGameSession, getGameSession, updateTerritoryOwnership, and updateUnitPosition with proper cache invalidation.",
+  "frontend/src/utils/gameInitializer.ts": "Game initialization utilities defining the 6 territory polygons with vertices/centers, unit spawn positions for both teams, and helper functions for distance calculation and point-in-polygon testing.",
+  "frontend/src/utils/botAI.ts": "AI logic for bot-controlled units implementing team-specific strategies: Colonizers advance toward uncaptured territories while Native Peoples defend their lands and intercept enemies.",
+  "frontend/src/utils/winConditions.ts": "Win condition checker that returns the winning team when all territories are colonized (Colonizers win) or when time expires with territories remaining (Native Peoples win).",
+  "frontend/src/hooks/useGameEngine.ts": "Core game engine hook managing all game state with React refs for performance, running timer/capture/bot intervals, and exposing actions for move, attack, fortify, select, and end turn.",
+  "frontend/src/components/PlayerSlotCard.tsx": "Individual player slot configuration card with Player/Bot toggle switch, name input, and team selector styled with 16th-century earthy aesthetics.",
+  "frontend/src/components/GameLobby.tsx": "Lobby screen displaying 8 configurable player slots split into two team columns with emblems, balance validation, game rules, and a Start Game button.",
+  "frontend/src/components/GameTimer.tsx": "Countdown timer component displaying MM:SS format with color-coded urgency states (normal/warning/critical) and pulse animation when under 60 seconds.",
+  "frontend/src/components/CaptureProgressBar.tsx": "Small progress bar component showing territory capture progress with team-colored fills for contested territories.",
+  "frontend/src/components/UnitActionPanel.tsx": "Side panel for selected units showing health bar, stats (ATK/DEF/MOV), and action buttons for Move, Attack, and Fortify with disabled states for used actions.",
+  "frontend/src/components/GameBoard.tsx": "Canvas-based game board that renders territories, units, health bars, and movement indicators; fixes the TypeScript null-safety error by extracting `drawGameElements` as a top-level function that receives the non-null `HTMLCanvasElement` as an explicit parameter.",
+  "frontend/src/components/GameOverScreen.tsx": "Animated victory overlay showing the winning team's emblem, flavor text, and Play Again/Return to Lobby buttons with ornate 16th-century styling.",
+  "frontend/src/components/TerritoryLegend.tsx": "Side panel legend showing territory ownership counts per team with a conquest progress bar indicating how close Colonizers are to winning.",
+  "frontend/src/pages/GamePage.tsx": "Main game page orchestrating the board, timer, action panel, territory legend, and game-over screen with handlers for all player interactions and game session creation.",
+  "frontend/src/App.tsx": "Root application component managing view state between lobby and game, passing player configuration to the game page and handling navigation back to lobby."
+}

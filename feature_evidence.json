@@ -1,0 +1,144 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-game-lobby-screen-where-8-player-slots-are-displayed-each-slot-must-allow-the-user-to-assign-it-as-player-human-controlled-or-bot-ai-controlled-choose-a-team-native-peoples-or-colonizers-and-enter-a-name-the-two-teams-must-be-balanced-4-vs-4-the-lobby-should-include-a-start-game-button-that-only-activates-when-all-8-slots-are-configured",
+      "featureTitle": "Create a game lobby screen where 8 player slots are displayed. Each slot must allow the user to assign it as 'Player' (human-controlled) or 'Bot' (AI-controlled), choose a team (Native Peoples or Colonizers), and enter a name. The two teams must be balanced (4 vs 4). The lobby should include a 'Start Game' button that only activates when all 8 slots are configured.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/GameLobby.tsx",
+        "frontend/src/components/PlayerSlotCard.tsx",
+        "frontend/src/types/game.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-main-game-board-as-a-2d-top-down-map-representing-a-16th-century-landscape-with-distinct-land-territories-the-map-must-show-territory-zones-that-colonizers-can-capture-native-peoples-units-defend-these-territories-the-game-is-rendered-using-react-with-a-canvas-or-svg-based-approach-for-the-map-and-units",
+      "featureTitle": "Implement the main game board as a 2D top-down map representing a 16th-century landscape with distinct land territories. The map must show territory zones that Colonizers can capture. Native Peoples units defend these territories. The game is rendered using React with a canvas or SVG-based approach for the map and units.",
+      "files": [
+        "frontend/src/components/GameBoard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-turn-based-or-real-time-movement-and-action-mechanics-human-controlled-players-can-select-and-move-their-unit-and-perform-actions-attack-defend-fortify-territory-via-click-tap-bot-controlled-slots-execute-ai-logic-automatically-units-should-have-basic-stats-health-attack-movement-range",
+      "featureTitle": "Implement turn-based or real-time movement and action mechanics: human-controlled players can select and move their unit and perform actions (attack, defend, fortify territory) via click/tap. Bot-controlled slots execute AI logic automatically. Units should have basic stats (health, attack, movement range).",
+      "files": [
+        "frontend/src/components/GameBoard.tsx",
+        "frontend/src/components/UnitActionPanel.tsx",
+        "frontend/src/utils/botAI.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-territory-conquest-mechanic-a-territory-is-conquered-by-the-colonizers-when-one-or-more-colonizer-units-occupy-it-uncontested-for-a-set-duration-conquered-territories-change-visual-state-the-colonizers-win-condition-is-met-when-all-territories-are-conquered-track-conquest-progress-visually-e-g-a-per-territory-capture-bar",
+      "featureTitle": "Implement the territory conquest mechanic: a territory is 'conquered' by the Colonizers when one or more Colonizer units occupy it uncontested for a set duration. Conquered territories change visual state. The Colonizers win condition is met when all territories are conquered. Track conquest progress visually (e.g., a per-territory capture bar).",
+      "files": [
+        "frontend/src/components/CaptureProgressBar.tsx",
+        "frontend/src/utils/winConditions.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-10-minute-countdown-game-timer-displayed-prominently-during-gameplay-when-the-timer-reaches-zero-and-the-colonizers-have-not-conquered-all-territories-the-native-peoples-win-if-colonizers-conquer-all-territories-before-the-timer-expires-they-win-immediately-display-a-game-over-screen-announcing-the-winning-team-with-a-play-again-and-return-to-lobby-option",
+      "featureTitle": "Implement a 10-minute countdown game timer displayed prominently during gameplay. When the timer reaches zero and the Colonizers have NOT conquered all territories, the Native Peoples win. If Colonizers conquer all territories before the timer expires, they win immediately. Display a game-over screen announcing the winning team with a 'Play Again' and 'Return to Lobby' option.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/GameOverScreen.tsx",
+        "frontend/src/components/GameTimer.tsx",
+        "frontend/src/pages/GamePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-rich-16th-century-colonial-era-visual-theme-across-the-entire-ui-earthy-and-natural-color-palette-forest-greens-ochre-terracotta-aged-parchment-backgrounds-period-inspired-typography-illustrated-style-map-tiles-and-historically-evocative-iconography-for-both-teams-feathers-and-tribal-motifs-for-native-peoples-galleons-crosses-and-armor-for-colonizers-apply-the-theme-consistently-from-lobby-to-game-board-to-game-over-screen",
+      "featureTitle": "Apply a rich 16th-century colonial era visual theme across the entire UI: earthy and natural color palette (forest greens, ochre, terracotta, aged parchment backgrounds), period-inspired typography, illustrated-style map tiles, and historically-evocative iconography for both teams (feathers and tribal motifs for Native Peoples; galleons, crosses, and armor for Colonizers). Apply the theme consistently from lobby to game board to game-over screen.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-render-custom-static-images-for-the-game-a-parchment-textured-map-background-a-native-peoples-team-emblem-and-a-colonizers-team-emblem-serve-these-as-static-assets-from-frontend-public-assets-generated",
+      "featureTitle": "Generate and render custom static images for the game: a parchment-textured map background, a Native Peoples team emblem, and a Colonizers team emblem. Serve these as static assets from frontend/public/assets/generated.",
+      "files": [
+        "frontend/src/components/GameBoard.tsx",
+        "frontend/src/components/GameLobby.tsx",
+        "frontend/src/components/GameOverScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
