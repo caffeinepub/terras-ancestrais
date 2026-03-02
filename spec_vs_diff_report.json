@@ -1,15 +1,31 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T23:24:14.617Z",
-  "summary": "Both REQ-28 and REQ-29 appear to be implemented in the diff. REQ-28 is addressed in GameTimer.tsx with black text colors applied to all timer labels and values, with warning/critical states only affecting background/border/animation. REQ-29 is addressed in GamePage.tsx with an End Turn button wired to the endTurn function from useGameEngine, using SkipForward icon and parchment-themed styling. The truncation of GamePage.tsx prevents full verification of the disable/hide logic and bot-turn handling, but the import of SkipForward and endTurn hook usage are visible.",
-  "missing_requirements": [],
-  "hallucinated_features": [],
-  "confidence": 0.82,
+  "generatedAt": "2026-03-02T00:10:04.518Z",
+  "summary": "The diff shows a comprehensive rewrite of frontend/src/utils/botAI.ts that implements all three requirements: a shared TeamContext computed once per team turn (REQ-32), Colonizer faction role-based coordination (REQ-30), and Native Peoples defensive tactics (REQ-31). The file-diff summary confirms the presence of computeTeamContext, role assignments, class-specific decision trees, healer behavior, ambush positioning, and deduplication of capture targets. However, the diff content is truncated, so some acceptance criteria cannot be fully verified from the visible code alone.",
+  "missing_requirements": [
+    {
+      "id": "REQ-32",
+      "requirement": "Bot decision logs (console or comment-traceable) reflect role assignments from the shared state",
+      "reason": "The truncated diff does not show any console.log statements or traceable comments that output role assignments from the shared TeamContext. The file summary mentions role assignments exist but does not confirm logging or traceability.",
+      "evidence": [
+        "frontend/src/utils/botAI.ts"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Additional BotRole types 'ambush', 'support', and 'intercept' beyond the four specified in REQ-32",
+      "reason": "REQ-32 specifies roles: capture, defend, heal, build/destroy. The diff introduces 'ambush', 'support', and 'intercept' roles not mentioned in the build request.",
+      "evidence": [
+        "frontend/src/utils/botAI.ts"
+      ]
+    }
+  ],
+  "confidence": 0.62,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/GameTimer.tsx",
-    "frontend/src/pages/GamePage.tsx",
+    "frontend/src/utils/botAI.ts",
     "project_state.json"
   ]
 }

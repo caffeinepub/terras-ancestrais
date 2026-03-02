@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-in-frontend-src-components-gametimer-tsx-update-the-timer-text-styling-so-that-both-the-match-countdown-and-the-conquest-countdown-labels-and-time-values-are-rendered-in-black-color-regardless-of-warning-critical-state-transitions-ensure-the-pulsing-warning-orange-and-critical-red-states-only-affect-background-or-border-indicators-not-the-text-color-itself",
-      "featureTitle": "In `frontend/src/components/GameTimer.tsx`, update the timer text styling so that both the match countdown and the conquest countdown labels and time values are rendered in black color regardless of warning/critical state transitions. Ensure the pulsing warning (orange) and critical (red) states only affect background or border indicators, not the text color itself.",
+      "featureId": "feature-enhance-bot-ai-teamwork-for-the-colonizer-faction-in-frontend-src-utils-botai-ts-colonizer-bots-should-coordinate-as-a-team-by-dividing-roles-engineer-bots-prioritize-building-near-the-fort-captain-bots-position-themselves-near-clustered-allies-to-maximize-their-buff-aura-musket-soldier-bots-focus-on-contesting-open-field-strategic-points-and-missionary-bots-stay-close-to-damaged-allies-to-heal-rather-than-engage-enemies-directly-colonizer-bots-should-communicate-intent-implicitly-through-game-state-if-one-bot-is-already-capturing-a-strategic-point-other-colonizer-bots-should-move-to-support-or-cover-a-different-uncaptured-point-rather-than-converging-on-the-same-one",
+      "featureTitle": "Enhance bot AI teamwork for the Colonizer faction in `frontend/src/utils/botAI.ts`: Colonizer bots should coordinate as a team by dividing roles — Engineer bots prioritize building near the Fort, Captain bots position themselves near clustered allies to maximize their buff aura, Musket Soldier bots focus on contesting open-field strategic points, and Missionary bots stay close to damaged allies to heal rather than engage enemies directly. Colonizer bots should communicate intent implicitly through game state: if one bot is already capturing a strategic point, other Colonizer bots should move to support or cover a different uncaptured point rather than converging on the same one.",
       "files": [
-        "frontend/src/components/GameTimer.tsx"
+        "frontend/src/utils/botAI.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,15 +16,15 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-28"
+        "REQ-30"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-an-end-turn-button-to-the-game-hud-in-frontend-src-pages-gamepage-tsx-the-button-must-be-prominently-visible-during-gameplay-styled-consistently-with-the-16th-century-parchment-theme-when-a-human-controlled-player-clicks-end-turn-the-current-player-s-turn-is-concluded-and-the-game-engine-advances-to-the-next-player-s-turn-calling-the-appropriate-turn-advance-logic-in-frontend-src-hooks-usegameengine-ts-the-button-should-be-disabled-or-hidden-when-it-is-not-the-local-human-player-s-turn-e-g-during-bot-turns-or-animations",
-      "featureTitle": "Add an 'End Turn' button to the game HUD in `frontend/src/pages/GamePage.tsx`. The button must be prominently visible during gameplay, styled consistently with the 16th-century parchment theme. When a human-controlled player clicks 'End Turn', the current player's turn is concluded and the game engine advances to the next player's turn (calling the appropriate turn-advance logic in `frontend/src/hooks/useGameEngine.ts`). The button should be disabled or hidden when it is not the local human player's turn (e.g., during bot turns or animations).",
+      "featureId": "feature-enhance-bot-ai-teamwork-for-the-native-peoples-faction-in-frontend-src-utils-botai-ts-native-bots-should-coordinate-defensively-as-a-team-forest-warrior-bots-use-camouflage-and-ambush-tactics-by-positioning-in-forest-territories-and-waiting-for-colonizer-units-to-enter-range-before-attacking-spirit-hunter-bots-mark-high-priority-enemy-targets-e-g-engineers-near-the-fort-so-that-melee-allies-are-guided-toward-the-same-target-shaman-bots-stay-in-the-rear-and-prioritize-healing-the-most-critically-wounded-ally-each-turn-and-sentinel-bots-actively-seek-and-destroy-enemy-constructions-towers-fortresses-before-taking-offensive-actions-multiple-native-bots-should-converge-on-the-same-contested-territory-when-its-capture-countdown-is-active",
+      "featureTitle": "Enhance bot AI teamwork for the Native Peoples faction in `frontend/src/utils/botAI.ts`: Native bots should coordinate defensively as a team — Forest Warrior bots use camouflage and ambush tactics by positioning in forest territories and waiting for Colonizer units to enter range before attacking, Spirit Hunter bots mark high-priority enemy targets (e.g., Engineers near the Fort) so that melee allies are guided toward the same target, Shaman bots stay in the rear and prioritize healing the most critically wounded ally each turn, and Sentinel bots actively seek and destroy enemy constructions (Towers, Fortresses) before taking offensive actions. Multiple Native bots should converge on the same contested territory when its capture countdown is active.",
       "files": [
-        "frontend/src/pages/GamePage.tsx"
+        "frontend/src/utils/botAI.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -35,7 +35,26 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-29"
+        "REQ-31"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-shared-bot-team-state-object-in-frontend-src-utils-botai-ts-that-is-computed-once-per-team-turn-before-individual-bot-decisions-are-made-this-state-should-track-which-strategic-points-are-currently-contested-or-uncaptured-which-allied-units-are-critically-low-on-health-below-30-which-enemy-constructions-are-visible-and-which-bot-units-have-already-been-assigned-a-role-this-turn-capture-defend-heal-build-destroy-each-bot-unit-should-read-this-shared-state-when-selecting-its-action-to-avoid-redundant-targeting-and-improve-coordination",
+      "featureTitle": "Implement a shared bot team state object in `frontend/src/utils/botAI.ts` that is computed once per team turn before individual bot decisions are made. This state should track: which strategic points are currently contested or uncaptured, which allied units are critically low on health (below 30%), which enemy constructions are visible, and which bot units have already been assigned a role this turn (capture, defend, heal, build/destroy). Each bot unit should read this shared state when selecting its action to avoid redundant targeting and improve coordination.",
+      "files": [
+        "frontend/src/utils/botAI.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-32"
       ],
       "confidence": "high"
     }

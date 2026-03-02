@@ -1,57 +1,78 @@
 {
   "kind": "build_request",
-  "title": "Black timer text and End Turn button",
+  "title": "Improve bot team coordination and strategic intelligence",
   "projectName": "Terras Ancestrais",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-28",
-      "text": "In `frontend/src/components/GameTimer.tsx`, update the timer text styling so that both the match countdown and the conquest countdown labels and time values are rendered in black color regardless of warning/critical state transitions. Ensure the pulsing warning (orange) and critical (red) states only affect background or border indicators, not the text color itself.",
+      "id": "REQ-30",
+      "text": "Enhance bot AI teamwork for the Colonizer faction in `frontend/src/utils/botAI.ts`: Colonizer bots should coordinate as a team by dividing roles — Engineer bots prioritize building near the Fort, Captain bots position themselves near clustered allies to maximize their buff aura, Musket Soldier bots focus on contesting open-field strategic points, and Missionary bots stay close to damaged allies to heal rather than engage enemies directly. Colonizer bots should communicate intent implicitly through game state: if one bot is already capturing a strategic point, other Colonizer bots should move to support or cover a different uncaptured point rather than converging on the same one.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-6"
         ],
         "quotes": [
-          "deixe o tempo esrito em preto"
+          "quero que os bots das equipes sejam  mais inteligentes e trabalham em equipe"
         ]
       },
       "acceptanceCriteria": [
-        "Match countdown text is black at all times during normal gameplay.",
-        "Conquest countdown text is black at all times, including when the conquest countdown is active.",
-        "Warning and critical visual states (orange/red) do not override the text color to a non-black value.",
-        "Timer remains legible against the parchment background."
+        "Colonizer bots spread across all 3 strategic points rather than clustering on one",
+        "Engineer bots prioritize the Build action when adjacent to Fort territory instead of attacking",
+        "Captain bots reposition toward clusters of allied units to activate their buff aura",
+        "Missionary bots target wounded allies with healing actions before engaging enemies",
+        "Musket Soldier bots prefer open-field territories and exploit their range bonus there"
       ]
     },
     {
-      "id": "REQ-29",
-      "text": "Add an 'End Turn' button to the game HUD in `frontend/src/pages/GamePage.tsx`. The button must be prominently visible during gameplay, styled consistently with the 16th-century parchment theme. When a human-controlled player clicks 'End Turn', the current player's turn is concluded and the game engine advances to the next player's turn (calling the appropriate turn-advance logic in `frontend/src/hooks/useGameEngine.ts`). The button should be disabled or hidden when it is not the local human player's turn (e.g., during bot turns or animations).",
+      "id": "REQ-31",
+      "text": "Enhance bot AI teamwork for the Native Peoples faction in `frontend/src/utils/botAI.ts`: Native bots should coordinate defensively as a team — Forest Warrior bots use camouflage and ambush tactics by positioning in forest territories and waiting for Colonizer units to enter range before attacking, Spirit Hunter bots mark high-priority enemy targets (e.g., Engineers near the Fort) so that melee allies are guided toward the same target, Shaman bots stay in the rear and prioritize healing the most critically wounded ally each turn, and Sentinel bots actively seek and destroy enemy constructions (Towers, Fortresses) before taking offensive actions. Multiple Native bots should converge on the same contested territory when its capture countdown is active.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-6"
         ],
         "quotes": [
-          "tenha um botao em que os jogadores apertem para finalizar o turno"
+          "quero que os bots das equipes sejam  mais inteligentes e trabalham em equipe"
         ]
       },
       "acceptanceCriteria": [
-        "An 'End Turn' button is visible on the game screen during a human player's turn.",
-        "Clicking 'End Turn' advances the turn to the next player.",
-        "The button is disabled or hidden when it is a bot's turn or during movement/action animations.",
-        "The button is styled with the existing parchment/period theme (earthy colors, period typography).",
-        "Bot turns continue to execute automatically without requiring the button."
+        "Forest Warrior bots position in forest territories and wait for enemies rather than charging into open fields",
+        "Spirit Hunter bots use the enemy-marking ability on Engineer or high-value Colonizer targets",
+        "Shaman bots select the lowest-health allied unit as healing target each turn",
+        "Sentinel bots prioritize the Destroy action on any visible enemy construction over offensive moves",
+        "When a territory's capture progress bar is active, 2 or more Native bots converge on that territory to interrupt the capture"
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "text": "Implement a shared bot team state object in `frontend/src/utils/botAI.ts` that is computed once per team turn before individual bot decisions are made. This state should track: which strategic points are currently contested or uncaptured, which allied units are critically low on health (below 30%), which enemy constructions are visible, and which bot units have already been assigned a role this turn (capture, defend, heal, build/destroy). Each bot unit should read this shared state when selecting its action to avoid redundant targeting and improve coordination.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "quero que os bots das equipes sejam  mais inteligentes e trabalham em equipe"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A shared team context object is computed at the start of each bot team's turn before any individual unit acts",
+        "No two bot units on the same team are assigned the identical capture-point target unless all other points are covered",
+        "Bot units flagged as 'healer role' (Shaman, Missionary) do not attempt to capture territories when wounded allies are within movement range",
+        "Bot decision logs (console or comment-traceable) reflect role assignments from the shared state"
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files listed under frontend.immutablePaths.",
-    "All changes must remain consistent with the existing 16th-century parchment visual theme."
+    "Do not modify any files listed under frontend.immutablePaths",
+    "All bot AI changes must be confined to frontend/src/utils/botAI.ts and any helper utilities it imports; do not alter useGameEngine.ts game loop timing or win condition logic"
   ],
   "nonGoals": [
-    "Changing any other timer styling properties beyond text color.",
-    "Altering bot AI turn logic beyond wiring the End Turn button.",
-    "Adding new gameplay mechanics or balance changes."
+    "Changes to human player controls or UI",
+    "Rebalancing unit base stats or territory capture timings",
+    "Adding new unit classes or abilities",
+    "Modifying the backend Motoko actor"
   ],
   "imageRequirements": {
     "required": [],
