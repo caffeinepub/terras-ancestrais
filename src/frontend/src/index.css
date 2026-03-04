@@ -1,0 +1,238 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.375rem;
+
+    /* 16th Century Parchment Palette */
+    --background: 0.92 0.04 85;
+    --foreground: 0.22 0.05 55;
+
+    --card: 0.88 0.05 80;
+    --card-foreground: 0.22 0.05 55;
+
+    --popover: 0.9 0.04 82;
+    --popover-foreground: 0.22 0.05 55;
+
+    /* Primary: Deep Sepia Brown */
+    --primary: 0.35 0.08 55;
+    --primary-foreground: 0.92 0.04 85;
+
+    /* Secondary: Ochre Gold */
+    --secondary: 0.72 0.12 75;
+    --secondary-foreground: 0.22 0.05 55;
+
+    /* Muted: Aged Parchment */
+    --muted: 0.85 0.04 80;
+    --muted-foreground: 0.45 0.06 60;
+
+    /* Accent: Terracotta */
+    --accent: 0.58 0.14 35;
+    --accent-foreground: 0.92 0.04 85;
+
+    /* Destructive: Deep Red */
+    --destructive: 0.45 0.18 25;
+    --destructive-foreground: 0.92 0.04 85;
+
+    --border: 0.65 0.07 65;
+    --input: 0.8 0.05 78;
+    --ring: 0.55 0.1 60;
+
+    /* Chart colors */
+    --chart-1: 0.55 0.14 35;
+    --chart-2: 0.45 0.12 145;
+    --chart-3: 0.65 0.12 75;
+    --chart-4: 0.4 0.1 25;
+    --chart-5: 0.6 0.08 200;
+
+    /* Sidebar */
+    --sidebar: 0.85 0.05 78;
+    --sidebar-foreground: 0.22 0.05 55;
+    --sidebar-primary: 0.35 0.08 55;
+    --sidebar-primary-foreground: 0.92 0.04 85;
+    --sidebar-accent: 0.8 0.05 75;
+    --sidebar-accent-foreground: 0.22 0.05 55;
+    --sidebar-border: 0.65 0.07 65;
+    --sidebar-ring: 0.55 0.1 60;
+
+    /* Game-specific tokens */
+    --parchment: 0.92 0.04 85;
+    --parchment-dark: 0.82 0.06 78;
+    --sepia: 0.35 0.08 55;
+    --ochre: 0.72 0.12 75;
+    --terracotta: 0.55 0.16 35;
+    --forest-green: 0.4 0.12 145;
+    --deep-red: 0.42 0.18 25;
+    --gold: 0.78 0.14 80;
+    --navy: 0.28 0.08 240;
+    --native-primary: 0.42 0.14 145;
+    --colonizer-primary: 0.38 0.16 25;
+  }
+
+  .dark {
+    --background: 0.18 0.04 55;
+    --foreground: 0.88 0.04 80;
+    --card: 0.22 0.05 55;
+    --card-foreground: 0.88 0.04 80;
+    --popover: 0.25 0.05 58;
+    --popover-foreground: 0.88 0.04 80;
+    --primary: 0.78 0.12 78;
+    --primary-foreground: 0.22 0.05 55;
+    --secondary: 0.3 0.06 55;
+    --secondary-foreground: 0.88 0.04 80;
+    --muted: 0.28 0.05 55;
+    --muted-foreground: 0.65 0.06 70;
+    --accent: 0.55 0.14 35;
+    --accent-foreground: 0.92 0.04 85;
+    --destructive: 0.55 0.18 25;
+    --destructive-foreground: 0.92 0.04 85;
+    --border: 1 0 0 / 12%;
+    --input: 1 0 0 / 15%;
+    --ring: 0.65 0.08 70;
+    --sidebar: 0.22 0.05 55;
+    --sidebar-foreground: 0.88 0.04 80;
+    --sidebar-primary: 0.78 0.12 78;
+    --sidebar-primary-foreground: 0.22 0.05 55;
+    --sidebar-accent: 0.28 0.05 55;
+    --sidebar-accent-foreground: 0.88 0.04 80;
+    --sidebar-border: 1 0 0 / 12%;
+    --sidebar-ring: 0.65 0.08 70;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "IM Fell English", Georgia, serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Cinzel", serif;
+  }
+}
+
+@layer components {
+  .parchment-bg {
+    background-color: oklch(var(--parchment));
+    background-image: radial-gradient(
+        ellipse at 20% 30%,
+        oklch(0.85 0.06 75 / 0.4) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 80% 70%,
+        oklch(0.8 0.07 65 / 0.3) 0%,
+        transparent 50%
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  .ornate-border {
+    border: 2px solid oklch(var(--sepia));
+    box-shadow: inset 0 0 0 1px oklch(var(--ochre) / 0.4), 0 4px 16px
+      oklch(var(--sepia) / 0.2);
+  }
+
+  .period-title {
+    font-family: "Cinzel Decorative", serif;
+    letter-spacing: 0.05em;
+  }
+
+  .period-text {
+    font-family: "IM Fell English", Georgia, serif;
+  }
+
+  .team-native {
+    background-color: oklch(var(--native-primary) / 0.15);
+    border-color: oklch(var(--native-primary));
+  }
+
+  .team-colonizer {
+    background-color: oklch(var(--colonizer-primary) / 0.15);
+    border-color: oklch(var(--colonizer-primary));
+  }
+
+  .health-bar-native {
+    background: linear-gradient(
+      90deg,
+      oklch(0.38 0.14 145),
+      oklch(0.52 0.16 145)
+    );
+  }
+
+  .health-bar-colonizer {
+    background: linear-gradient(90deg, oklch(0.42 0.18 25), oklch(0.58 0.2 35));
+  }
+
+  .capture-bar-colonizer {
+    background: linear-gradient(90deg, oklch(0.45 0.16 25), oklch(0.62 0.18 35));
+  }
+
+  .capture-bar-native {
+    background: linear-gradient(
+      90deg,
+      oklch(0.38 0.14 145),
+      oklch(0.52 0.16 145)
+    );
+  }
+}
+
+/* Game-over screen animations */
+@keyframes gameOverEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes emblemPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes titleGlow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Damage flash animation */
+@keyframes damageFlash {
+  0% {
+    filter: brightness(1);
+  }
+  25% {
+    filter: brightness(2) saturate(0) sepia(1);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.unit-damaged {
+  animation: damageFlash 0.4s ease-out forwards;
+}
